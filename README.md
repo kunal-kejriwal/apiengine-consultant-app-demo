@@ -4,6 +4,8 @@ A working freelance consultant CRM, built end-to-end in 30 minutes
 with [APIEngine](https://theapiengine.com) and Claude Code. Track 
 clients, projects, and invoices — without writing backend code.
 
+![Dashboard](docs/screenshots/01-dashboard.png)
+
 ## What this is
 
 This is a real working frontend for a freelance consulting business. 
@@ -14,6 +16,11 @@ same API.
 
 **Total build time:** ~30 minutes.  
 **Total backend code written by hand:** zero.
+
+> **Note on the live demo:** [freelance-consultant.vercel.app](https://freelance-consultant.vercel.app/) 
+> uses my own APIEngine API key, so records you add there are visible 
+> to all visitors and persist in my account. To run it cleanly with 
+> your own data, follow the Quickstart below.
 
 ## Features
 
@@ -26,11 +33,7 @@ same API.
 - Fully typed TypeScript against the OpenAPI spec
 - React Query for caching and background refetches
 
-> **Note on the live demo:** [freelance-consultant.vercel.app](https://freelance-consultant.vercel.app/) 
-> uses my own APIEngine API key, so records you add there are visible to all 
-> visitors and persist in my account. To run it cleanly with your own data, 
-> follow the Quickstart below.
-
+![Projects with filter](docs/screenshots/03-projects-filtered.png)
 
 ## Quickstart
 
@@ -52,17 +55,41 @@ Open `http://localhost:5173`. You should see the dashboard.
 
 ## How it was built
 
-1. **Defined the schema via API.** Three custom objects (Client, 
-   Project, Invoice) with relationships, created with 
-   `POST /api/v1/custom/models/` and `POST /api/v1/custom/fields/` 
-   calls — no dashboard work.
+This whole repo was generated end-to-end with Claude Code in three 
+phases. The same backend powers both the frontend you're looking at 
+and the APIEngine admin dashboard:
 
-2. **Populated sample records via API.** 4 clients, 5 projects, 8 
-   invoices — all with realistic data and proper relationships.
+![Same data, two views](docs/screenshots/05-proof-shot.png)
 
-3. **Generated the frontend with Claude Code.** Using the OpenAPI 
-   spec downloaded from `GET /api/v1/openapi.json`, Claude Code 
-   produced this app — types, API client, pages, forms.
+### Phase 1 — Schema design and creation (10 min)
+
+I gave Claude Code my OpenAPI spec and asked it to design and 
+create a data model for a freelance consulting business. It:
+
+1. Read the spec to find the schema-management endpoints
+2. Designed three custom objects (Client, Project, Invoice) with 
+   relationships
+3. Created them via `POST /api/v1/custom/models/` and 
+   `POST /api/v1/custom/fields/` calls
+4. Re-fetched the spec to confirm the new objects appeared
+
+No dashboard work. No SQL. No migrations.
+
+### Phase 2 — Realistic sample data (10 min)
+
+Same LLM populated 4 clients, 5 projects, and 8 invoices via API. 
+Real-sounding company names, internally consistent timelines, 
+realistic Indian Rupee amounts. All persisted to the live backend 
+with proper foreign keys.
+
+### Phase 3 — Frontend generation (10 min)
+
+Claude Code consumed the (now-updated) OpenAPI spec and produced 
+this React app — typed API client, three pages, forms, status 
+filtering, error handling. Calling the real APIEngine backend with 
+no mocks.
+
+![Add client form](docs/screenshots/04-add-client-form.png)
 
 ## What APIEngine is
 
@@ -72,29 +99,38 @@ objects plus the ability to define your own. Every account gets a
 personalized OpenAPI spec that AI tools and code generators can 
 consume directly.
 
+The wedge: you don't write SQL, you don't manage migrations, you 
+don't set up auth. You define your data, and a working API exists 
+the moment you save.
+
 ## Replace it with your own data model
 
+This app is opinionated toward freelance consulting. To adapt it 
+for a different vertical:
+
 1. Open your APIEngine dashboard
-2. Create your own custom objects
+2. Create your own custom objects (Products, Recipes, whatever)
 3. Re-download your spec
 4. Hand the spec to Claude Code with a prompt like  
-   "Adapt this app to work with my new data model"
+   *"Adapt this app to work with my new data model"*
 
 The whole frontend is ~1,500 lines. It's meant to be read, modified, 
 and replaced.
 
 ## Tech stack
 
-- **Frontend:** React 18, TypeScript, Vite, Tailwind CSS v3, React Router, TanStack Query
+- **Frontend:** React 18, TypeScript, Vite, Tailwind CSS v3, 
+  React Router, TanStack Query
 - **Backend:** APIEngine (Django/DRF/PostgreSQL/Redis under the hood)
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT — see [LICENSE](LICENSE). Use this however you like.
 
 ## Built by
 
-[Kunal Kejriwal](https://kunalkejriwal.com) — also building APIEngine.
+[Kunal Kejriwal](https://kunalkejriwal.com) — also building APIEngine 
+solo. Reach me on [LinkedIn](https://linkedin.com/in/kunalkejriwal).
 
 ## Questions
 
