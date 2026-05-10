@@ -26,6 +26,12 @@ same API.
 - Fully typed TypeScript against the OpenAPI spec
 - React Query for caching and background refetches
 
+> **Note on the live demo:** [freelance-consultant.vercel.app](https://freelance-consultant.vercel.app/) 
+> uses my own APIEngine API key, so records you add there are visible to all 
+> visitors and persist in my account. To run it cleanly with your own data, 
+> follow the Quickstart below.
+
+
 ## Quickstart
 
 You'll need:
